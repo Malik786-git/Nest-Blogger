@@ -8,7 +8,11 @@ import {
 	Headers,
 	Ip,
 	ParseIntPipe,
+	DefaultValuePipe,
+	ValidationPipe,
 } from '@nestjs/common';
+import { CreateUserDto } from './dtos/user-create.dto';
+import { GetUserParamsDto } from './dtos/get-user-param.dto';
 
 @Controller('users')
 export class UsersController {
@@ -29,24 +33,36 @@ export class UsersController {
 	public getMoreSpecificDataOfSingleUsers(
 		@Param('id') id: string,
 		@Param('option', ParseIntPipe) option: number | undefined,
-		@Query('limit') limit: string,
+		@Query('limit', new DefaultValuePipe(10)) limit: string,
 		@Query('offset') offset: string,
 	): string {
 		console.log(typeof id);
-		console.log(typeof option); //Note: we get err if we get option param as a string, but if we not pass option key coz its optional param so it sill show validation err coz validation pipe only apply on req params
-		console.log(typeof limit);
+		console.log(typeof option); //Note: we get err if we get option param as a string, but if we not pass option key coz its optional param so it still show validation err coz validation pipe only apply on req params
+		console.log(typeof limit, limit); // default, we get limit 10, if user not send a limit param
 		console.log(typeof offset);
 		return 'Get single users';
 	}
+
+	@Get('dto/:id?')
+	public getDtoParam(@Param() getUserDtoParam: GetUserParamsDto, @Query() query: any): string {
+		console.log(getUserDtoParam);
+		console.log(query);
+		return 'Get single users';
+	}
+	
 	@Post()
 	public createPost(
-		@Body() body: any,
+		// @Body() body: any, // simple body req
+		// @Body(new ValidationPipe()) createUserDto: CreateUserDto, // add validation pipe on particular http req
+		@Body() createUserDto: CreateUserDto, // validation pips applies global on every req on bootstrap method.
 		@Headers() headers: any,
 		@Ip() ip: any,
 	): string {
-		console.log(body);
-		console.log(headers);
-		console.log(ip);
+		// console.log(body); // simple body req
+		// console.log(headers);
+		// console.log(ip);
+		console.log(typeof createUserDto); // but create user dto is not instance of CreateUserDto class.
+		console.log(createUserDto instanceof  CreateUserDto); // return false coz its object.. but if you want to req object must be instants of you DTO class, enable transformation in validation pipe/ global validation pipe
 		return 'user created successfully';
 	}
 }
