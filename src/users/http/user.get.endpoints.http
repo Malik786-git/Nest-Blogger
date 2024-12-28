@@ -10,3 +10,8 @@ GET http://localhost:8000/users/more/single/232323/123
 
 ### dto params validation
 GET http://localhost:8000/users/dto/323
+
+###
+GET http://localhost:8000/users/service/123
+    ?limit=20
+    &page=1

@@ -1,1 +1,3 @@
+// dependencies
 npm i class-validator@0.14.1 class-transformer@0.5.1
+npm i @nestjs/mapped-types@2.0.5

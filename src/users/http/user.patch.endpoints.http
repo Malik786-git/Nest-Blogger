@@ -1,0 +1,9 @@
+PATCH http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "firstName": "Jahangir",
+  "lastName": "Malik Muhammad Jahangir",
+  "email": "malik@gmail.com",
+  "password": "Admin123@@"
+}
