@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -11,6 +12,18 @@ async function bootstrap() {
 			transform: true, // enable req object must be a instance of DTO class
 		}),
 	);
+
+	// setups apis docs with swagger
+	const config = new DocumentBuilder()
+		.setTitle('Next Blogger Apis Documentation')
+		.setDescription('Use the base API URL http://localhost:8000/')
+		.setTermsOfService('http://localhost:8000/term-and-condition')
+		.setLicense("Apache 2.0", "https://www.apache.org/licenses/LICENSE-2.0")
+		.addServer('http://localhost:8000')
+		.setVersion('1.0').build();
+	const document = SwaggerModule.createDocument(app, config);
+	SwaggerModule.setup('api', app, document);
+
 	await app.listen(process.env.PORT ?? 8000);
 }
 bootstrap();

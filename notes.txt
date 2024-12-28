@@ -1,3 +1,14 @@
 // dependencies
 npm i class-validator@0.14.1 class-transformer@0.5.1
 npm i @nestjs/mapped-types@2.0.5
+
+// api documentations with swagger (use open api)
+npm i @nestjs/swagger@7.3.0
+
+// cmd to generate files
+// below cmd generate controller file with no spec mean no testing file of controller
+nest generate controller post --no-spec
+
+
+// below cmd generate posts.service.ts file inside the provider folder. Provider folder generate itself with tha help of folder path n --flat flag
+nest generate service posts/provider/posts --flat --no-spec
