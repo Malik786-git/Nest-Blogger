@@ -16,7 +16,7 @@ import { CreateUserDto } from './dtos/user-create.dto';
 import { GetUserParamsDto } from './dtos/get-user-param.dto';
 import { UserPatchDto } from './dtos/user-patch.dto';
 import { UserService } from './providers/user.service';
-import {ApiTags} from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('users')
 @ApiTags('users')
@@ -33,6 +33,27 @@ export class UsersController {
 
 	// use service for business logic
 	@Get('service/:id?')
+	@ApiOperation({
+		summary: 'Get the register user of the applicaton',
+	})
+	@ApiResponse({
+		status: 200,
+		description: 'Get the register user',
+	})
+	@ApiQuery({
+		name: 'limit',
+		type: 'number',
+		required: false,
+		description: 'The number of user limit return per query',
+		example: 5,
+	})
+	@ApiQuery({
+		name: 'page',
+		type: 'number',
+		required: false,
+		description: 'The position of the page number of user',
+		example: 1,
+	})
 	public getUserService(
 		@Param() GetUserParamsDto: GetUserParamsDto,
 		@Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
