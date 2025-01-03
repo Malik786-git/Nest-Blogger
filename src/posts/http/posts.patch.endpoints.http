@@ -1,0 +1,20 @@
+PATCH http://localhost:8000/posts
+Content-Type: application/json
+
+{"id": 2,
+  "title": "Whats New in NEST JS",
+  "postType": "post",
+  "slug": "nest-js-new-features",
+  "status": "draft",
+  "content" : "test content",
+  "schema" : "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\": \"Person\" \r\n}",
+  "featuredImageUrl" : "http://localhost.com/images/img1.jpg",
+  "publishOn": "2024-03-16T08:45:32+0000",
+  "tags": ["nestjs", "typescirpt"],
+  "metaOptions": [
+    {
+      "key":"testKey",
+      "value":"testvalue"
+    }
+  ]
+}

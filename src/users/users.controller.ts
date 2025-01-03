@@ -95,20 +95,26 @@ export class UsersController {
 	}
 
 	@Post()
-	public createPost(
-		// @Body() body: any, // simple body req
-		// @Body(new ValidationPipe()) createUserDto: CreateUserDto, // add validation pipe on particular http req
-		@Body() createUserDto: CreateUserDto, // validation pips applies global on every req on bootstrap method.
-		@Headers() headers: any,
-		@Ip() ip: any,
-	): string {
-		// console.log(body); // simple body req
-		// console.log(headers);
-		// console.log(ip);
-		console.log(typeof createUserDto); // but create user dto is not instance of CreateUserDto class.
-		console.log(createUserDto instanceof CreateUserDto); // return false coz its object.. but if you want to req object must be instants of you DTO class, enable transformation in validation pipe/ global validation pipe
-		return 'user created successfully';
+	public createPost(@Body() createUserDto: CreateUserDto) {
+		return this.UserService.createUser(createUserDto);
 	}
+
+	// 'withoutdb'
+	// @Post()
+	// public createTestPost(
+	// 	// @Body() body: any, // simple body req
+	// 	// @Body(new ValidationPipe()) createUserDto: CreateUserDto, // add validation pipe on particular http req
+	// 	@Body() createUserDto: CreateUserDto, // validation pips applies global on every req on bootstrap method.
+	// 	@Headers() headers: any,
+	// 	@Ip() ip: any,
+	// ): string {
+	// 	// console.log(body); // simple body req
+	// 	// console.log(headers);
+	// 	// console.log(ip);
+	// 	console.log(typeof createUserDto); // but create user dto is not instance of CreateUserDto class.
+	// 	console.log(createUserDto instanceof CreateUserDto); // return false coz its object.. but if you want to req object must be instants of you DTO class, enable transformation in validation pipe/ global validation pipe
+	// 	return 'user created successfully';
+	// }
 
 	@Patch()
 	public patchUser(@Body() userPatchDto: UserPatchDto): string {

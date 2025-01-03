@@ -5,6 +5,20 @@ npm i @nestjs/mapped-types@2.0.5
 // api documentations with swagger (use open api)
 npm i @nestjs/swagger@7.3.0
 
+// code documentations with compo docs
+npm i @compodoc/compodoc@1.1.23
+after installation goto package.json file and add this line in script
+    "doc": "npx @compodoc/compodoc -p tsconfig.json -s --port 3001 --watch -d ./documentation"
+    mean build code document on port 3001 live changes with --watch, generated docs will be show in dir /documentation
+    then run on terminal "npm run doc"
+
+    how to comments our code for documentations;
+    ref https://jsdoc.app/ standart method for commit
+
+
+ // setup sql db with orm
+ npm i typeorm@0.3.20 @nestjs/typeorm@10.0.2 pg@8.11.5
+xxxxxxxxxxxxxxxxxxxxxxxxxxx
 // cmd to generate files
 // below cmd generate controller file with no spec mean no testing file of controller
 nest generate controller post --no-spec
@@ -12,3 +26,5 @@ nest generate controller post --no-spec
 
 // below cmd generate posts.service.ts file inside the provider folder. Provider folder generate itself with tha help of folder path n --flat flag
 nest generate service posts/provider/posts --flat --no-spec
+
+

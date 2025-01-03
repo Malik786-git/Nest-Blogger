@@ -2,8 +2,8 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "firstName": "Jahangir",
-  "lastName": "Malik Muhammad Jahangir",
-  "email": "malik@gmail.com",
-  "password": "Admin123@@"
+  "firstName": "Kaber",
+  "lastName": "Malik Muhammad",
+  "email": "malikhghgh@gmail.com",
+  "password": "Adminjj123@@"
 }
