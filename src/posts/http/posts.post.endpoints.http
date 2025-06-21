@@ -1,20 +1,16 @@
-POST http://localhost:8000/posts
+POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-  "title": "Whats New in NEST JS",
+  "title": "What's new with NestJS",
   "postType": "post",
-  "slug": "nest-js-new-features",
+  "slug": "new-with-nestjs-2",
   "status": "draft",
-  "content" : "test content",
-  "schema" : "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\": \"Person\" \r\n}",
-  "featuredImageUrl" : "http://localhost.com/images/img1.jpg",
-  "publishOn": "2024-03-16T08:45:32+0000",
-  "tags": ["nestjs", "typescirpt"],
-  "metaOptions": [
-    {
-      "key":"testKey",
-      "value":"testvalue"
+  "content": "test content",
+  "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\": \"Person\"\r\n }",
+  "featuredImageUrl": "http://localhost.com/images/image1.jpg",
+  "publishOn": "2024-03-16T07:46:32+0000",
+  "metaOptions" : {
+    "metaValue": "{ \"sidebarEnabled\": true, \"footerActive\": false }"
     }
-  ]
 }

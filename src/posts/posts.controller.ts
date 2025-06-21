@@ -1,34 +1,48 @@
-import { Controller, Post, Get, Param, Body, Patch } from '@nestjs/common';
-import { PostsService } from './provider/posts.service';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { PostsService } from './providers/posts.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PatchPostDto } from './dtos/patch-post.dto';
 
 @Controller('posts')
-@ApiTags('posts')
+@ApiTags('Posts')
 export class PostsController {
-	constructor(private readonly PostsService: PostsService) {}
+  constructor(
+    /*
+     *  Injecting Posts Service
+     */
+    private readonly postsService: PostsService,
+  ) {}
 
-	@Get(':userId?')
-	public getPostByUserId(@Param('userId') userId: string) {
-		return this.PostsService.getAllPosts(userId);
-	}
+  /*
+   * GET localhost:3000/posts/:userId
+   */
+  @Get('/:userId?')
+  public getPosts(@Param('userId') userId: string) {
+    return this.postsService.findAll(userId);
+  }
 
-	@ApiOperation({
-		summary: 'Create New Blog Post',
-	})
-	@ApiResponse({
-		status: 200,
-		description: 'Successfully posted post',
-	})
-	@Post()
-	public createPost(@Body() createPostDto: CreatePostDto) {
-		console.log(createPostDto);
-		return "Post Created"
-	}
+  @ApiOperation({
+    summary: 'Creates a new blog post',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'You get a 201 response if your post is created successfully',
+  })
+  @Post()
+  public createPost(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(createPostDto);
+  }
 
-	@Patch()
-	public  updatePost(@Body() patchPostDto:PatchPostDto){
-			console.log(patchPostDto);
-	}
+  @ApiOperation({
+    summary: 'Updates an existing blog post',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'A 200 response if the post is updated successfully',
+  })
+  @Patch()
+  public updatePost(@Body() patchPostsDto: PatchPostDto) {
+    console.log(patchPostsDto);
+  }
 }

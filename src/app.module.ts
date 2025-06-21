@@ -1,34 +1,42 @@
-import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
+import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { Module } from '@nestjs/common';
+import { PostsModule } from './posts/posts.module';
+import { Tag } from './tags/tag.entity';
+import { TagsModule } from './tags/tags.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+/**
+ * Importing Entities
+ * */
 import { User } from './users/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
-	imports: [
-		UsersModule,
-		PostsModule,
-		AuthModule,
-		TypeOrmModule.forRootAsync({
-			imports: [],
-			inject: [],
-			useFactory: () => ({
-				type: 'postgres',
-				entities: [User],
-				// alert: enable only in dev mode coz its created table itself if its need. so its good for prod
-				synchronize: true,
-				port: 5432,
-				username: 'postgres',
-				password: 'Admin@123',
-				host: 'localhost',
-				database: 'nestjs-blog',
-			}),
-		}),
-	],
-	controllers: [AppController],
-	providers: [AppService],
+  imports: [
+    UsersModule,
+    PostsModule,
+    AuthModule,
+    TypeOrmModule.forRootAsync({
+      imports: [],
+      inject: [],
+      useFactory: () => ({
+        type: 'postgres',
+        // entities: [User],
+        synchronize: true,
+        port: 5432,
+        username: 'postgres',
+        password: 'Admin@123',
+        host: 'localhost',
+        autoLoadEntities: true,
+        database: 'nestjs-blog',
+      }),
+    }),
+    TagsModule,
+    MetaOptionsModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

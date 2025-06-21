@@ -1,70 +1,81 @@
-import { PostType } from './enums/postType.enum';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { CreatePostMetaOptionsDto } from '../meta-options/dtos/create-post-meta-options.dto';
+import { MetaOption } from 'src/meta-options/meta-option.entity';
 import { postStatus } from './enums/postStatus.enum';
-import { CreatePostMetaOptionDto } from './dtos/create-post-meta-optoin.dto';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { postType } from './enums/postType.enum';
 
+@Entity()
 export class Post {
-	@PrimaryGeneratedColumn()
-	id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-	@Column({
-		type: 'varchar',
-		length: 512,
-		nullable: false,
-	})
-	title: string;
+  @Column({
+    type: 'varchar',
+    length: 512,
+    nullable: false,
+  })
+  title: string;
 
-	@Column({
-		type: 'enum',
-		enum: PostType,
-		nullable: false,
-		default: PostType.POST,
-	})
-	postType: PostType;
+  @Column({
+    type: 'enum',
+    enum: postType,
+    nullable: false,
+    default: postType.POST,
+  })
+  postType: postType;
 
-	@Column({
-		type: 'varchar',
-		length: 256,
-		nullable: false,
-		unique: true,
-	})
-	slug: string;
+  @Column({
+    type: 'varchar',
+    length: 256,
+    nullable: false,
+    unique: true,
+  })
+  slug: string;
 
-	@Column({
-		type: 'enum',
-		enum: postStatus,
-		nullable: false,
-		default: postStatus.DRAFT,
-	})
-	status: postStatus;
+  @Column({
+    type: 'enum',
+    enum: postStatus,
+    nullable: false,
+    default: postStatus.DRAFT,
+  })
+  status: postStatus;
 
-	@Column({
-		// for content long txt use text to be good
-		type: 'text',
-		nullable: false,
-	})
-	content?: string;
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  content?: string;
 
-	@Column({
-		type: 'text',
-		nullable: false,
-	})
-	schema?: string;
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  schema?: string;
 
-	@Column({
-		type: 'varchar',
-		length: 1024,
-		nullable: false,
-	})
-	featuredImageUrl?: string;
+  @Column({
+    type: 'varchar',
+    length: 1024,
+    nullable: true,
+  })
+  featuredImageUrl?: string;
 
-	@Column({
-		type: 'timestamp', // datetime
-		nullable: true,
-	})
-	publishOn?: Date;
+  @Column({
+    type: 'timestamp', // 'datetime' in mysql
+    nullable: true,
+  })
+  publishOn?: Date;
 
-	// work on it when we learn relationship
-	tags?: string[];
-	metaOptions?: CreatePostMetaOptionDto[];
+  @OneToOne(() => MetaOption, { cascade: true })
+  @JoinColumn()
+  metaOptions?: MetaOption;
+
+  // Work on these in lecture on relationships
+  tags?: string[];
 }
